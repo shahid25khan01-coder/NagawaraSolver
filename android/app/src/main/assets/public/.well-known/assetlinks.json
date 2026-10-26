@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "org.nagawara.ward22.solver",
+      "sha256_cert_fingerprints": [
+        "14:6D:E9:7D:3E:2E:37:F9:EE:4B:97:5A:6F:7D:0C:5E:2B:6F:7D:8E:9A:0B:1C:2D:3E:4F:5A:6B:7C:8D:9E:0F"
+      ]
+    }
+  }
+]

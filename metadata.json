@@ -1,0 +1,6 @@
+{
+  "name": "NagawaraSolver",
+  "description": "NagawaraSolver: Ward-22 Nagawara civic issue redressal portal by Syed Ali President Nagawara Ward.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

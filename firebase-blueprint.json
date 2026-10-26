@@ -1,0 +1,311 @@
+{
+  "entities": {
+    "Complaint": {
+      "title": "Complaint",
+      "description": "Civic issue reported by citizen and managed by city administrators",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ticket ID e.g. CP-1234",
+          "maxLength": 64
+        },
+        "title": {
+          "type": "string",
+          "description": "Issue summary title",
+          "maxLength": 150
+        },
+        "category": {
+          "type": "string",
+          "description": "Civic infrastructure category",
+          "enum": ["roads", "streetlights", "sanitation", "water", "parks", "traffic"]
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of the issue",
+          "maxLength": 2000
+        },
+        "status": {
+          "type": "string",
+          "description": "Resolution lifecycle status",
+          "enum": ["submitted", "verified", "in_progress", "resolved"]
+        },
+        "priority": {
+          "type": "string",
+          "description": "Severity priority level",
+          "enum": ["low", "medium", "high", "urgent"]
+        },
+        "location": {
+          "type": "object",
+          "description": "Geolocation and address coordinates"
+        },
+        "photoUrl": {
+          "type": "string",
+          "description": "Photo of reported incident",
+          "maxLength": 600000
+        },
+        "afterPhotoUrl": {
+          "type": "string",
+          "description": "Photo of resolved issue",
+          "maxLength": 600000
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of creation"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last update"
+        },
+        "citizenName": {
+          "type": "string",
+          "description": "Reporter name",
+          "maxLength": 100
+        },
+        "citizenPhone": {
+          "type": "string",
+          "description": "Reporter phone number",
+          "maxLength": 30
+        },
+        "citizenEmail": {
+          "type": "string",
+          "description": "Reporter email address",
+          "maxLength": 120
+        },
+        "isAnonymous": {
+          "type": "boolean",
+          "description": "Whether report is anonymous"
+        },
+        "assignedDepartmentId": {
+          "type": "string",
+          "description": "Assigned Department ID",
+          "maxLength": 50
+        },
+        "assignedDepartmentName": {
+          "type": "string",
+          "description": "Department name",
+          "maxLength": 100
+        },
+        "assignedOfficerId": {
+          "type": "string",
+          "description": "Assigned officer ID",
+          "maxLength": 50
+        },
+        "assignedOfficerName": {
+          "type": "string",
+          "description": "Officer name and role",
+          "maxLength": 100
+        },
+        "assignedSupervisorId": {
+          "type": "string",
+          "description": "Assigned supervisor ID",
+          "maxLength": 50
+        },
+        "assignedSupervisorName": {
+          "type": "string",
+          "description": "Supervisor name and title",
+          "maxLength": 100
+        },
+        "assignedSupervisorPhone": {
+          "type": "string",
+          "description": "Supervisor phone number",
+          "maxLength": 30
+        },
+        "supervisorNotes": {
+          "type": "string",
+          "description": "Field notes entered by supervisor",
+          "maxLength": 2000
+        },
+        "resolutionNotes": {
+          "type": "string",
+          "description": "Notes explaining resolution",
+          "maxLength": 2000
+        },
+        "resolvedAt": {
+          "type": "string",
+          "description": "ISO timestamp of completion"
+        },
+        "upvotes": {
+          "type": "number",
+          "description": "Citizen confirmation count"
+        },
+        "timeline": {
+          "type": "array",
+          "description": "Audit events history log"
+        },
+        "citizenRating": {
+          "type": "number",
+          "description": "Rating out of 5"
+        },
+        "citizenFeedback": {
+          "type": "string",
+          "description": "Feedback message",
+          "maxLength": 1000
+        }
+      },
+      "required": ["id", "title", "category", "description", "status", "priority", "location", "photoUrl", "createdAt", "updatedAt"]
+    },
+    "Department": {
+      "title": "Department",
+      "description": "Municipal operations department and officer roster",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Department code/id",
+          "maxLength": 50
+        },
+        "name": {
+          "type": "string",
+          "description": "Full department name",
+          "maxLength": 100
+        },
+        "code": {
+          "type": "string",
+          "description": "Department code",
+          "maxLength": 20
+        },
+        "category": {
+          "type": "string",
+          "description": "Handled category",
+          "enum": ["roads", "streetlights", "sanitation", "water", "parks", "traffic"]
+        },
+        "headName": {
+          "type": "string",
+          "description": "Head of department",
+          "maxLength": 100
+        },
+        "activeStaffCount": {
+          "type": "number",
+          "description": "Number of active field staff"
+        },
+        "slaHours": {
+          "type": "number",
+          "description": "Service Level Agreement in hours"
+        },
+        "activeComplaintsCount": {
+          "type": "number",
+          "description": "Active tasks in department"
+        },
+        "resolvedComplaintsCount": {
+          "type": "number",
+          "description": "Resolved tasks count"
+        },
+        "officers": {
+          "type": "array",
+          "description": "List of officers in department"
+        }
+      },
+      "required": ["id", "name", "code", "category", "headName", "activeStaffCount", "slaHours"]
+    },
+    "CivicNotification": {
+      "title": "CivicNotification",
+      "description": "Notification message dispatched to a user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique notification ID",
+          "maxLength": 64
+        },
+        "complaintId": {
+          "type": "string",
+          "description": "Associated complaint ID",
+          "maxLength": 64
+        },
+        "title": {
+          "type": "string",
+          "description": "Notification subject",
+          "maxLength": 150
+        },
+        "message": {
+          "type": "string",
+          "description": "Notification body",
+          "maxLength": 1000
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO timestamp"
+        },
+        "type": {
+          "type": "string",
+          "description": "Notification category",
+          "enum": ["status_change", "assignment", "resolved", "civic_alert"]
+        },
+        "isRead": {
+          "type": "boolean",
+          "description": "Read status"
+        }
+      },
+      "required": ["id", "title", "message", "timestamp", "type", "isRead"]
+    },
+    "CitizenProfile": {
+      "title": "CitizenProfile",
+      "description": "Citizen profile credentials and activity statistics",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "User identifier",
+          "maxLength": 128
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name",
+          "maxLength": 100
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address",
+          "maxLength": 120
+        },
+        "phone": {
+          "type": "string",
+          "description": "Phone number",
+          "maxLength": 30
+        },
+        "ward": {
+          "type": "string",
+          "description": "City ward or precinct",
+          "maxLength": 60
+        },
+        "avatar": {
+          "type": "string",
+          "description": "Avatar image URL",
+          "maxLength": 2048
+        },
+        "points": {
+          "type": "number",
+          "description": "Civic karma points"
+        },
+        "complaintsCount": {
+          "type": "number",
+          "description": "Complaints filed"
+        },
+        "resolvedCount": {
+          "type": "number",
+          "description": "Complaints resolved"
+        }
+      },
+      "required": ["id", "name", "email", "ward", "points"]
+    }
+  },
+  "firestore": {
+    "/complaints/{complaintId}": {
+      "schema": "Complaint",
+      "description": "Collection of city issues and complaints. Only admins may list all complaints, preventing general users from browsing public issues."
+    },
+    "/departments/{departmentId}": {
+      "schema": "Department",
+      "description": "City departments handling civic resolutions and staff rosters"
+    },
+    "/users/{userId}/profile/main": {
+      "schema": "CitizenProfile",
+      "description": "Private user profile and statistics"
+    },
+    "/users/{userId}/notifications/{notificationId}": {
+      "schema": "CivicNotification",
+      "description": "Private notifications for the specific citizen user"
+    }
+  }
+}

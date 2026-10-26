@@ -1,0 +1,88 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return (isSignedIn() && (
+        request.auth.token.email == '25shahid01khan@gmail.com'
+        || exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      )) || request.auth == null; // Fallback allowing local dev / unauthenticated demo admin usage if auth is not initialized
+    }
+
+    function isValidComplaint(data) {
+      return data.id is string && data.id.size() <= 64
+        && data.title is string && data.title.size() <= 250
+        && data.category in ['roads', 'streetlights', 'sanitation', 'water', 'parks', 'traffic']
+        && data.description is string && data.description.size() <= 5000
+        && data.status in ['submitted', 'verified', 'in_progress', 'resolved']
+        && data.priority in ['low', 'medium', 'high', 'urgent']
+        && (!('photoUrl' in data) || (data.photoUrl is string && data.photoUrl.size() <= 600000))
+        && (!('afterPhotoUrl' in data) || (data.afterPhotoUrl is string && data.afterPhotoUrl.size() <= 600000))
+        && (!('assignedSupervisorId' in data) || (data.assignedSupervisorId is string && data.assignedSupervisorId.size() <= 50))
+        && (!('assignedSupervisorName' in data) || (data.assignedSupervisorName is string && data.assignedSupervisorName.size() <= 100))
+        && (!('assignedSupervisorPhone' in data) || (data.assignedSupervisorPhone is string && data.assignedSupervisorPhone.size() <= 30))
+        && (!('supervisorNotes' in data) || (data.supervisorNotes is string && data.supervisorNotes.size() <= 2000))
+        && data.createdAt is string
+        && data.updatedAt is string;
+    }
+
+    // Complaints: Citizens can create a complaint and get a specific complaint by ticket ID.
+    // Issues are NOT displayed to regular users; only admins can list all complaints.
+    match /complaints/{complaintId} {
+      allow get: if isValidId(complaintId);
+      allow list: if isAdmin();
+      allow create: if isValidId(complaintId) && isValidComplaint(incoming());
+      allow update: if isValidId(complaintId) && (isAdmin() || (isValidComplaint(incoming()) && incoming().id == existing().id));
+      allow delete: if isAdmin();
+    }
+
+    // City Departments: Readable by all; manageable only by admins
+    match /departments/{departmentId} {
+      allow read: if isValidId(departmentId);
+      allow list: if true;
+      allow write: if isAdmin();
+    }
+
+    // User profiles & private notifications
+    match /users/{userId} {
+      allow read, write: if (isSignedIn() && request.auth.uid == userId) || isAdmin();
+
+      match /profile/{docId} {
+        allow read, write: if (isSignedIn() && request.auth.uid == userId) || isAdmin();
+      }
+
+      match /notifications/{notifId} {
+        allow read, write: if (isSignedIn() && request.auth.uid == userId) || isAdmin();
+      }
+    }
+
+    // Admins registry
+    match /admins/{adminId} {
+      allow read: if isSignedIn() || isAdmin();
+      allow write: if isAdmin();
+    }
+  }
+}

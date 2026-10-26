@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>NagawaraSolver - Ward-22 Civic Issue Reporting Portal</title>
+    <meta name="description" content="NagawaraSolver: Ward-22 Nagawara civic issue redressal portal by Syed Ali President Nagawara Ward." />
+    <meta property="og:title" content="NagawaraSolver - Ward-22 Civic Issue Reporting Portal" />
+    <meta property="og:description" content="NagawaraSolver: Ward-22 Nagawara civic issue redressal portal by Syed Ali President Nagawara Ward." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
+    <!-- PWA & Mobile Web App Meta Tags -->
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="NagawaraSolver" />
+    <meta name="application-name" content="NagawaraSolver" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+      // Filter benign Vite WebSocket dev-server disconnect notices in preview iframe
+      window.addEventListener('error', function(event) {
+        if (event && (event.message?.includes('WebSocket') || event.error?.message?.includes('WebSocket'))) {
+          event.stopImmediatePropagation?.();
+          event.preventDefault?.();
+        }
+      }, true);
+      window.addEventListener('unhandledrejection', function(event) {
+        if (event && (event.reason?.message?.includes('WebSocket') || String(event.reason).includes('WebSocket'))) {
+          event.stopImmediatePropagation?.();
+          event.preventDefault?.();
+        }
+      }, true);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

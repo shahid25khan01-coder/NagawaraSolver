@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NagawaraSolver</string>
+    <string name="title_activity_main">NagawaraSolver</string>
+    <string name="package_name">org.nagawara.ward22.solver</string>
+    <string name="custom_url_scheme">org.nagawara.ward22.solver</string>
+</resources>

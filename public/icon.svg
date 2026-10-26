@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+  <!-- Background with safe zone -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)" />
+  <!-- Inner Shield / Circle -->
+  <circle cx="256" cy="256" r="180" fill="#ffffff" opacity="0.1" />
+  <!-- City Skyline Silhouette -->
+  <path d="M140 350 L140 280 L180 280 L180 230 L220 230 L220 200 L260 200 L260 250 L300 250 L300 220 L340 220 L340 350 Z" fill="#ffffff" opacity="0.25" />
+  <!-- Prominent Location Pin Icon -->
+  <path d="M256 120 C206.3 120 166 160.3 166 210 C166 270 256 360 256 360 C256 360 346 270 346 210 C346 160.3 305.7 120 256 120 Z" fill="#ffffff" />
+  <!-- Pin Inner Checkmark -->
+  <circle cx="256" cy="210" r="42" fill="url(#accent)" />
+  <path d="M242 210 L252 220 L272 198" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
